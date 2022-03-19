@@ -9,6 +9,15 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String
     },
+    gender:{
+        type:String
+    },
+    DOB:{
+        type:String
+    },
+    phone:{
+        type:Number
+    },
     
 },{timestamps:true}) ;
-module.exports=mongoose.model('User',userSchema)
+module.exports=mongoose.model('DUMP',userSchema)

@@ -5,7 +5,7 @@ const User=require('../models/user');
 const {requireLogin} = require('../middleware/auth')
 //register
 router.post('/register', async(req,res)=>{
-    const {name,email,password}=req.body;
+    const {name,email,password,gender,phone,DOB}=req.body;
     try{
         let user=await User.findOne({email});
         if(user){
@@ -13,7 +13,7 @@ router.post('/register', async(req,res)=>{
         }
         const hashed_pass=await bcrypt.hash(password,10);
         user=new User({
-            email,name,password:hashed_pass
+            email,name,password:hashed_pass,gender,phone,DOB
         })
         await user.save();
         return res.status(201).json({
@@ -46,6 +46,16 @@ router.get('/', requireLogin, async (req,res)=>{
     console.log(req.user)
     try{
         const user = await User.findById(req.user.id).select('-password');
+        res.json(user)
+    }catch(err){
+        console.log(err)
+    }
+})
+
+router.get('/users', async (req,res)=>{
+    console.log(req.user)
+    try{
+        const user = await User.find();
         res.json(user)
     }catch(err){
         console.log(err)

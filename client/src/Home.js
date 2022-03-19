@@ -12,8 +12,17 @@ const Home = (props) => {
     });
     setUser(res.data);
   };
+  const getUsers = async () => {
+    const res = await axios.get("/auth/users", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log(res)
+  };
   useEffect(() => {
     getUser();
+    getUsers();
   }, []);
 
   const logout = () => {
